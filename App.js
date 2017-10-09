@@ -1,12 +1,13 @@
 import React from 'react';
 import { Picker, TextInput, Button, StyleSheet, Text, View } from 'react-native';
-import OnboardingScreen from "./src/OnboardingScreen.js"
+// import OnboardingScreen from "./src/OnboardingScreen.js"
+import HomeScreen from "./src/HomeScreen.js"
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <OnboardingScreen/>
+        <HomeScreen/>
       </View>
     );
   }
