@@ -1,27 +1,50 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View } from 'react-native';
 import LoginScreen from './src/LoginScreen.js';
+import HomeScreen from './src/HomeScreen.js';
 import * as firebase from 'firebase';
 import {StackNavigator} from 'react-navigation';
 
 import secrets from './config/secrets.js';
 var firebaseApp = firebase.initializeApp(secrets.firebaseConfig)
 
-const Navigator = StackNavigator({
+const AuthNavigator = StackNavigator({
   Login: { screen: LoginScreen }
 });
 
-// Listen for authentication state to change.
-firebase.auth().onAuthStateChanged((user) => {
-  if (user != null) {
-    console.log("We are authenticated now!");
-  }
+const MainNavigator = StackNavigator({
+  Home: { screen: HomeScreen }
 });
 
 export default class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      isAuthed: null
+    }
+  }
+
+  async componentWillMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user != null) {
+        this.setState({
+          isAuthed: true
+        })
+      } else {
+        this.setState({
+          isAuthed: false
+        })
+      }
+    });
+  }
+
   render() {
-    return (
-      <Navigator/>
-    );
+    if(this.state.isAuthed==null) {
+      return null
+    } else if (this.state.isAuthed) {
+      return (<MainNavigator/>)
+    } else {
+      return (<AuthNavigator/>)
+    }
   }
 }
