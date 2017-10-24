@@ -49,7 +49,7 @@ export default class App extends React.Component {
     if(this.state.isAuthed==null) {
       return null
     } else if (this.state.isAuthed) {
-      return (<MainNavigator/>)
+      return (<MainNavigator screenProps={{'user': this.state.currUser}}/>)
     } else {
       return (<AuthNavigator/>)
     }
