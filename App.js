@@ -19,14 +19,14 @@ const MainNavigator = StackNavigator({
   Home: { screen: HomeScreen },
   Confirm: { screen: ConfirmationScreen },
   OrderConfirmed: { screen: OrderConfirmedScreen },
-  // Home: { screen: HomeScreen },
 });
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      isAuthed: null
+      isAuthed: null,
+      currUser: null,
     }
   }
 
@@ -34,7 +34,8 @@ export default class App extends React.Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user != null) {
         this.setState({
-          isAuthed: true
+          isAuthed: true,
+          currUser: user
         })
       } else {
         this.setState({
