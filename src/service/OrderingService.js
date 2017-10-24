@@ -9,9 +9,9 @@ export default class OrderingService {
   placeOrder(cart, user) {
     this.database().ref('orders/' + userId).set({
       uuid: uuidv4(),
-      username: name,
-      email: email,
-      profile_picture : imageUrl
+      user: user,
+      cart: cart,
+      
     });
   }
 }
