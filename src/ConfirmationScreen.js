@@ -16,16 +16,37 @@ export default class ConfirmationScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>
-          Hello!!
-        </Text>
+          <Text style={styles.header}>
+            Ready to confirm your order?
+          </Text>
+          <FlatList
+            data={[
+              {
+                key: 1,
+                title: 'Cups',
+                imageUrl: require('./img/cup.png'),
+                quantityOrdered: 10,
+                price: 10
+              },
+              {
+                key: 2,
+                title: 'Balls',
+                imageUrl: require('./img/cup.png'),
+                quantityOrdered: 2,
+                price: 5
+              },
+            ]}
+            renderItem={({item}) => <Text style={styles.itemListed}>
+            {item.title}: {item.quantityOrdered}</Text>}/>
+          <Text style={styles.price}>Price: </Text>
+
         <View style={styles.checkoutWrapper}>
           <Button
             style={styles.checkoutButton}
             onPress={() => this.clearCart()}
-            title="Rando Button"
+            title="Press to confirm"
             color="#841584"
-            accessibilityLabel="Rando button"
+            accessibilityLabel="Press to confirm"
           />
         </View>
       </View>
@@ -47,6 +68,20 @@ const styles = StyleSheet.create({
   },
   itemButton: {
     width: 200,
+  },
+  header: {
+    fontSize: 30,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    paddingBottom: 40
+  },
+  price: {
+    fontWeight: 'bold',
+    fontSize: 40
+  },
+  itemListed: {
+    fontSize: 40,
+    textAlign: 'left'
   },
   checkoutButton: {
   },
