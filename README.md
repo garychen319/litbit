@@ -1,3 +1,19 @@
+#### To Run:
+1. Make sure you have Node, NPM, and Watchman installed. To run iOS, make sure that you have XCode command line tools installed
+2. Clone the repository
+3. Install all dependencies:
+```
+$ cd litbit
+$ npm install
+```
+4. At the root of the directory (where `App.js` is located), create a new folder called `config` and add your `secrets.json` here. To get `secrets.json`, contact David (jl4397@columbia.edu)
+5. Run the app
+```
+npm run ios
+```
+
+This should open up a Simulator window with the app. 
+
 #### TODO:
 - Build for Android and iOS for FB auth (https://docs.expo.io/versions/latest/sdk/facebook.html)
 
