@@ -17,7 +17,7 @@ export default class ConfirmationScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text>
-          Hello!!
+          Wrong File!!
         </Text>
         <View style={styles.checkoutWrapper}>
           <Button
