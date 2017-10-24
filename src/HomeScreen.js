@@ -2,10 +2,36 @@ import React from 'react';
 import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
 import * as firebase from 'firebase';
 
+const _ = require('lodash');
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     title: "Home",
   };
+
+  constructor() {
+    super();
+    this.state = {
+      cart: {
+        1: 0,
+        2: 0,
+      },
+      items: [
+        {
+          key: 1,
+          title: 'Cups',
+          imageUrl: require('./img/cup.png'),
+          defaultQuantity: 10,
+        },
+        {
+          key: 2,
+          title: 'Balls',
+          imageUrl: require('./img/cup.png'),
+          defaultQuantity: 2,
+        },
+      ]
+    }
+  }
 
   signOut() {
     firebase.auth().signOut().then(() => {
@@ -15,26 +41,36 @@ export default class HomeScreen extends React.Component {
     })
   }
 
-  onPress() {
-    console.log("button clicked");
+  checkoutCart() {
+    console.log(totalCartItems)
+  }
+
+  clearCart() {
+    this.setState(_.merge({}, this.state, {
+      cart: _.mapValues(this.state.cart, () => 0)
+    }))
+  }
+
+  onPress(item) {
+    var count = this.state.cart[item.key];
+    this.setState(_.merge({}, this.state, {
+      cart: {
+        [item.key]: count+1,
+      }
+    }))
   }
 
   render() {
     return (
       <View style={styles.container}>
         <FlatList
-          data = {[
-            {
-              key: 'cups',
-              title: 'Cups',
-              imageUrl: require('./img/cup.png'),
-              defaultQuantity: 10,
-            }
-          ]}
+          contentContainerStyle={styles.feed}
+          horizontal = {true}
+          data = {this.state.items}
           renderItem={({item}) => {
             return (
               <View style={styles.itemButtonContainer}>
-                <TouchableHighlight onPress={this.onPress}>
+                <TouchableHighlight onPress={() => this.onPress(item)}>
                   <Image
                     style={styles.itemButton}
                     source={item.imageUrl}
@@ -46,13 +82,33 @@ export default class HomeScreen extends React.Component {
           }}
         />
         <View style={styles.checkoutWrapper}>
-            <Button
-              style={styles.checkoutButton}
-              onPress={() => {}}
-              title="Checkout"
-              color="#841584"
-              accessibilityLabel="Login"
+          <View>
+            <FlatList
+              data = {this.state.items}
+              renderItem={({item}) => {
+                return (
+                  <Text>
+                    {item.title}: {this.state.cart[item.key] * item.defaultQuantity}
+                  </Text>
+                )
+              }}
             />
+          </View>
+          <Button
+            style={styles.checkoutButton}
+            onPress={() => this.clearCart()}
+            title="Clear Cart"
+            color="#841584"
+            accessibilityLabel="Clear Cart"
+          />
+          <Button
+            style={styles.checkoutButton}
+            disabled={_.sum(_.values(this.state.cart)) === 0}
+            onPress={() => {this.checkoutCart()}}
+            title="Checkout"
+            color="#841584"
+            accessibilityLabel="Checkout"
+          />
         </View>
       </View>
 	  )
@@ -62,6 +118,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     flex: 1,
+  },
+  feed: {
     alignItems: 'center',
   },
   itemButtonContainer: {
@@ -74,7 +132,7 @@ const styles = StyleSheet.create({
   },
   checkoutWrapper: {
     flexDirection: 'row',
-    alignItems:'flex-start',
+    justifyContent: 'space-between',
     padding: 15,
   }
 });
