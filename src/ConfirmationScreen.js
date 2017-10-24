@@ -1,6 +1,8 @@
 import React from 'react';
 import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
 import * as firebase from 'firebase';
+import {StackNavigator} from 'react-navigation';
+
 
 const _ = require('lodash');
 
@@ -11,6 +13,11 @@ export default class ConfirmationScreen extends React.Component {
 
   constructor() {
     super();
+  }
+
+  confirmCart() {
+    this.props.navigation.navigate('OrderConfirmed')
+    console.log('Navigate to order confirmed screen')
   }
 
   render() {
@@ -37,13 +44,15 @@ export default class ConfirmationScreen extends React.Component {
               },
             ]}
             renderItem={({item}) => <Text style={styles.itemListed}>
-            {item.title}: {item.quantityOrdered}</Text>}/>
+            {item.title}: {item.quantityOrdered}
+            </Text>}
+            />
           <Text style={styles.price}>Price: </Text>
 
         <View style={styles.checkoutWrapper}>
           <Button
             style={styles.checkoutButton}
-            onPress={() => this.clearCart()}
+            onPress={() => this.confirmCart()}
             title="Press to confirm"
             color="#841584"
             accessibilityLabel="Press to confirm"

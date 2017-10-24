@@ -1,6 +1,8 @@
 import React from 'react';
 import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
 import * as firebase from 'firebase';
+// import {StackNavigator} from 'react-navigation';
+
 
 const _ = require('lodash');
 
@@ -42,7 +44,8 @@ export default class HomeScreen extends React.Component {
   }
 
   checkoutCart() {
-    console.log(totalCartItems)
+    this.props.navigation.navigate('Confirm')
+    console.log('Navigate to order confirmation screen')
   }
 
   clearCart() {
