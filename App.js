@@ -1,5 +1,8 @@
 import React from 'react';
 import { AsyncStorage, StyleSheet, Text, View } from 'react-native';
+import * as firebase from 'firebase';
+import {StackNavigator} from 'react-navigation';
+
 import LoginScreen from './src/LoginScreen.js';
 import HomeScreen from './src/HomeScreen.js';
 import ConfirmationScreen from './src/ConfirmationScreen.js';
@@ -7,10 +10,8 @@ import OrderConfirmedScreen from './src/OrderConfirmedScreen.js';
 import DeliveryScreen from './src/DeliveryScreen.js';
 import AcceptOrderScreen from './src/AcceptOrderScreen.js';
 
-import * as firebase from 'firebase';
-import {StackNavigator} from 'react-navigation';
-
 import secrets from './config/secrets.js';
+
 var firebaseApp = firebase.initializeApp(secrets.firebaseConfig)
 
 const AuthNavigator = StackNavigator({
@@ -31,22 +32,14 @@ export default class App extends React.Component {
     super();
     this.state = {
       isAuthed: null,
-      currUser: null,
     }
   }
 
   async componentWillMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      if (user != null) {
-        this.setState({
-          isAuthed: true,
-          currUser: user
-        })
-      } else {
-        this.setState({
-          isAuthed: false
-        })
-      }
+      this.setState({
+        isAuthed: (user != null)
+      })
     });
   }
 
@@ -54,7 +47,7 @@ export default class App extends React.Component {
     if(this.state.isAuthed==null) {
       return null
     } else if (this.state.isAuthed) {
-      return (<MainNavigator screenProps={{'user': this.state.currUser}}/>)
+      return (<MainNavigator screenProps={{'user': firebase.auth().currentUser}}/>)
     } else {
       return (<AuthNavigator/>)
     }

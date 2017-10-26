@@ -1,5 +1,5 @@
-export default class LoginService {
+export default class AuthService {
   constructor() {}
 
-  
+
 }
