@@ -4,6 +4,8 @@ import LoginScreen from './src/LoginScreen.js';
 import HomeScreen from './src/HomeScreen.js';
 import ConfirmationScreen from './src/ConfirmationScreen.js';
 import OrderConfirmedScreen from './src/OrderConfirmedScreen.js';
+import DeliveryScreen from './src/DeliveryScreen.js';
+import AcceptOrderScreen from './src/AcceptOrderScreen.js';
 
 import * as firebase from 'firebase';
 import {StackNavigator} from 'react-navigation';
@@ -16,16 +18,21 @@ const AuthNavigator = StackNavigator({
 });
 
 const MainNavigator = StackNavigator({
-  OrderConfirmed: { screen: OrderConfirmedScreen },
-  Confirm: { screen: ConfirmationScreen },
+
   Home: { screen: HomeScreen },
+  Confirm: { screen: ConfirmationScreen },
+  Delivery: { screen: DeliveryScreen },
+  OrderConfirmed: { screen: OrderConfirmedScreen },
+  AcceptOrder: { screen: AcceptOrderScreen }
+  // Home: { screen: HomeScreen },
 });
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      isAuthed: null
+      isAuthed: null,
+      currUser: null,
     }
   }
 
@@ -33,7 +40,8 @@ export default class App extends React.Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user != null) {
         this.setState({
-          isAuthed: true
+          isAuthed: true,
+          currUser: user
         })
       } else {
         this.setState({
@@ -47,7 +55,7 @@ export default class App extends React.Component {
     if(this.state.isAuthed==null) {
       return null
     } else if (this.state.isAuthed) {
-      return (<MainNavigator/>)
+      return (<MainNavigator screenProps={{'user': this.state.currUser}}/>)
     } else {
       return (<AuthNavigator/>)
     }

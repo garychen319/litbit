@@ -4,10 +4,9 @@ import * as firebase from 'firebase';
 
 const _ = require('lodash');
 
-export default class OrderConfirmedScreen extends React.Component {
+export default class AcceptOrderScreen extends React.Component {
   static navigationOptions = {
-    title: "Order Confirmed",
-    headerLeft: null,
+    title: "Order Accepted",
   };
 
   constructor() {
@@ -17,15 +16,9 @@ export default class OrderConfirmedScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.titleText}>
-          Your order is on its way!!
+        <Text>
+          Order Accepted!!
         </Text>
-
-        <FlatList
-        data={[{title: 'Title Text', key: 'item1'}, {title: 'title2', key: 'item2'}]}
-        renderItem={({item}) => <Text key={item.key}> {item.title}</Text>}
-        />
-
         <View style={styles.checkoutWrapper}>
           <Button
             style={styles.checkoutButton}
@@ -60,12 +53,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 15,
-  },
-    baseText: {
-    fontFamily: 'Cochin',
-  },
-  titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
   }
 });

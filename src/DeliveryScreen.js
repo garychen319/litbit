@@ -1,39 +1,38 @@
 import React from 'react';
 import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
 import * as firebase from 'firebase';
+import {StackNavigator} from 'react-navigation';
+
 
 const _ = require('lodash');
 
-export default class OrderConfirmedScreen extends React.Component {
+export default class DeliveryScreen extends React.Component {
   static navigationOptions = {
-    title: "Order Confirmed",
-    headerLeft: null,
+    title: "Delivery Mode",
   };
 
   constructor() {
     super();
   }
 
+  acceptOrder(){
+    this.props.navigation.navigate('AcceptOrder')
+    console.log('Navigate to order accept order screen')
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.titleText}>
-          Your order is on its way!!
-        </Text>
-
-        <FlatList
-        data={[{title: 'Title Text', key: 'item1'}, {title: 'title2', key: 'item2'}]}
-        renderItem={({item}) => <Text key={item.key}> {item.title}</Text>}
-        />
-
-        <View style={styles.checkoutWrapper}>
+          <Text>
+            [orderer name] ordered [order detail] at [order address]
+          </Text>
           <Button
-            style={styles.checkoutButton}
-            title="Rando button"
+            onPress={() => {this.acceptOrder()}}
+            title="Accept"
             color="#841584"
-            accessibilityLabel="Rando Button"
+            accessibilityLabel="Accept"
           />
-        </View>
+
       </View>
 	  )
   }
@@ -54,18 +53,25 @@ const styles = StyleSheet.create({
   itemButton: {
     width: 200,
   },
+  header: {
+    fontSize: 30,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    paddingBottom: 40
+  },
+  price: {
+    fontWeight: 'bold',
+    fontSize: 40
+  },
+  itemListed: {
+    fontSize: 40,
+    textAlign: 'left'
+  },
   checkoutButton: {
   },
   checkoutWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 15,
-  },
-    baseText: {
-    fontFamily: 'Cochin',
-  },
-  titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
   }
 });

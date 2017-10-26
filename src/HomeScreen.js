@@ -1,6 +1,8 @@
 import React from 'react';
 import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
 import * as firebase from 'firebase';
+// import {StackNavigator} from 'react-navigation';
+
 
 const _ = require('lodash');
 
@@ -22,12 +24,14 @@ export default class HomeScreen extends React.Component {
           title: 'Cups',
           imageUrl: require('./img/cup.png'),
           defaultQuantity: 10,
+          pricePerDefaultQuantity: 2.99,
         },
         {
           key: 2,
           title: 'Balls',
-          imageUrl: require('./img/cup.png'),
+          imageUrl: require('./img/ball.png'),
           defaultQuantity: 2,
+          pricePerDefaultQuantity: 2,
         },
       ]
     }
@@ -42,7 +46,15 @@ export default class HomeScreen extends React.Component {
   }
 
   checkoutCart() {
-    console.log(totalCartItems)
+    var mergedCart = _.forEach(this.state.items, (item)=> {
+      item.quantityOrdered = this.state.cart[item.key]
+    })
+    this.props.navigation.navigate('Confirm', {'user': this.props.screenProps.user, 'cart': mergedCart})
+  }
+
+  delivery() {
+    this.props.navigation.navigate('Delivery')
+    console.log('Navigate to delivery mode')
   }
 
   clearCart() {
@@ -63,6 +75,13 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Button
+          style={styles.checkoutButton}
+          onPress={() => {this.delivery()}}
+          title="Delivery"
+          color="#841584"
+          accessibilityLabel="Delivery"
+        />
         <FlatList
           contentContainerStyle={styles.feed}
           horizontal = {true}
