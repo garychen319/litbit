@@ -31,7 +31,7 @@ export default class HomeScreen extends React.Component {
           title: 'Balls',
           imageUrl: require('./img/ball.png'),
           defaultQuantity: 2,
-          pricePerDefaultQuantity: 2,
+          pricePerDefaultQuantity: 2.99,
         },
       ]
     }
