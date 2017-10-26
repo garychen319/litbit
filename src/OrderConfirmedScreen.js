@@ -8,9 +8,7 @@ const _ = require('lodash');
 
 export default class ConfirmationScreen extends React.Component {
   
-  navigationOptions = {
-    title: "Confirm Order",
-  };
+
 
   constructor() {
     super();
@@ -18,10 +16,6 @@ export default class ConfirmationScreen extends React.Component {
       cart: {},
       price: 0,
     }
-  }
-
-  returnHome() {
-    this.props.navigation.navigate('HomeScreen')
   }
 
   render() {
@@ -36,7 +30,7 @@ export default class ConfirmationScreen extends React.Component {
         <View style={styles.checkoutWrapper}>
           <Button
             style={styles.checkoutButton}
-            onPress={() => navigate('Home')}
+            onPress={() => this.props.navigation.navigate('Home')}
             title="Return"
             color="#841584"
           />
