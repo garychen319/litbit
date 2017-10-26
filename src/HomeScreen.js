@@ -29,7 +29,7 @@ export default class HomeScreen extends React.Component {
         {
           key: 2,
           title: 'Balls',
-          imageUrl: require('./img/cup.png'),
+          imageUrl: require('./img/ball.png'),
           defaultQuantity: 2,
           pricePerDefaultQuantity: 2,
         },
@@ -52,6 +52,11 @@ export default class HomeScreen extends React.Component {
     this.props.navigation.navigate('Confirm', {'user': this.props.screenProps.user, 'cart': mergedCart})
   }
 
+  delivery() {
+    this.props.navigation.navigate('Delivery')
+    console.log('Navigate to delivery mode')
+  }
+
   clearCart() {
     this.setState(_.merge({}, this.state, {
       cart: _.mapValues(this.state.cart, () => 0)
@@ -70,6 +75,13 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Button
+          style={styles.checkoutButton}
+          onPress={() => {this.delivery()}}
+          title="Delivery"
+          color="#841584"
+          accessibilityLabel="Delivery"
+        />
         <FlatList
           contentContainerStyle={styles.feed}
           horizontal = {true}
