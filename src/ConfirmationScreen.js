@@ -21,7 +21,8 @@ export default class ConfirmationScreen extends React.Component {
   }
 
   confirmCart() {
-    this.props.navigation.navigate('OrderConfirmed')
+
+    this.props.navigation.navigate('OrderConfirmed', {'user': this.props.screenProps.user, 'cart': this.props.navigation.state.params.cart})
   }
 
   componentDidMount() {
@@ -53,6 +54,7 @@ export default class ConfirmationScreen extends React.Component {
         <View style={styles.checkoutWrapper}>
           <Button
             style={styles.checkoutButton}
+            disabled={_.sum(_.values(this.state.cart)) === 0}
             onPress={() => this.confirmCart()}
             title="Press to confirm"
             color="#841584"

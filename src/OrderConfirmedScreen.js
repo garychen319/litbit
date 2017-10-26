@@ -7,8 +7,10 @@ import {StackNavigator} from 'react-navigation';
 const _ = require('lodash');
 
 export default class ConfirmationScreen extends React.Component {
-  
-
+  static navigationOptions = {
+    title: "Confirm Order",
+    headerLeft: null,
+  };
 
   constructor() {
     super();
@@ -18,21 +20,48 @@ export default class ConfirmationScreen extends React.Component {
     }
   }
 
+  returnHome() {
+
+    this.props.navigation.navigate('Home')
+  }
+
+  componentDidMount() {
+    var cart = this.props.navigation.state.params.cart
+    var price = _.sum(_.map(cart, (item) => {
+      return item.quantityOrdered*item.pricePerDefaultQuantity
+    }))
+
+    this.setState(_.merge({}, this.state, {
+      cart: this.props.navigation.state.params.cart,
+      price: price,
+    }))
+  }
+
   render() {
-    const {navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
           <Text style={styles.header}>
-            Your Order Has been Confirmed
+            Your order has been confirmed! {"\n"}
           </Text>
 
+          <Text style={styles.header2}>Order Summary: </Text>
+           
+          <FlatList
+            data={this.props.navigation.state.params.cart}
+            renderItem={({item}) => <Text style={styles.itemListed}>
+            {item.title}: {item.quantityOrdered}
+            </Text>}
+            />
+
+          <Text style={styles.price}>Total price: {this.state.price} </Text>
 
         <View style={styles.checkoutWrapper}>
           <Button
             style={styles.checkoutButton}
-            onPress={() => this.props.navigation.navigate('Home')}
-            title="Return"
+            onPress={() => this.returnHome()}
+            title="Return Home"
             color="#841584"
+            accessibilityLabel="Press to confirm"
           />
         </View>
       </View>
@@ -56,16 +85,21 @@ const styles = StyleSheet.create({
     width: 200,
   },
   header: {
-    fontSize: 30,
+    fontSize: 28,
+    textAlign: 'center',
+    paddingBottom: 40
+  },
+   header2: {
+    fontSize: 25,
+    fontWeight: 'bold',
     textAlign: 'center',
     paddingBottom: 40
   },
   price: {
-    fontWeight: 'bold',
     fontSize: 30
   },
   itemListed: {
-    fontSize: 40,
+    fontSize: 25,
     textAlign: 'left'
   },
   checkoutButton: {
@@ -76,25 +110,3 @@ const styles = StyleSheet.create({
     padding: 15,
   }
 });
-
-/*
-  componentDidMount() {
-    var cart = this.props.navigation.state.params.cart
-    var price = _.sum(_.map(cart, (item) => {
-      return item.quantityOrdered*item.pricePerDefaultQuantity
-    }))
-
-    this.setState(_.merge({}, this.state, {
-      cart: this.props.navigation.state.params.cart,
-      price: price,
-    }))
-  }
-
-            <FlatList
-            data={this.props.navigation.state.params.cart}
-            renderItem={({item}) => <Text style={styles.itemListed}>
-            {item.title}: {item.quantityOrdered}
-            </Text>}
-            />
-            <Text style={styles.price}>Price: {this.state.price} </Text>
-*/
