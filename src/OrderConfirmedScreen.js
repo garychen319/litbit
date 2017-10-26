@@ -7,6 +7,7 @@ const _ = require('lodash');
 export default class OrderConfirmedScreen extends React.Component {
   static navigationOptions = {
     title: "Order Confirmed",
+    headerLeft: null,
   };
 
   constructor() {

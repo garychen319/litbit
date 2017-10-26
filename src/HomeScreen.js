@@ -24,12 +24,14 @@ export default class HomeScreen extends React.Component {
           title: 'Cups',
           imageUrl: require('./img/cup.png'),
           defaultQuantity: 10,
+          pricePerDefaultQuantity: 2.99,
         },
         {
           key: 2,
           title: 'Balls',
           imageUrl: require('./img/ball.png'),
           defaultQuantity: 2,
+          pricePerDefaultQuantity: 2,
         },
       ]
     }
@@ -44,8 +46,10 @@ export default class HomeScreen extends React.Component {
   }
 
   checkoutCart() {
-    this.props.navigation.navigate('Confirm')
-    console.log('Navigate to order confirmation screen')
+    var mergedCart = _.forEach(this.state.items, (item)=> {
+      item.quantityOrdered = this.state.cart[item.key]
+    })
+    this.props.navigation.navigate('Confirm', {'user': this.props.screenProps.user, 'cart': mergedCart})
   }
 
   delivery() {
