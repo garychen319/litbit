@@ -1,8 +1,6 @@
 import React from 'react';
-import Expo from 'expo';
 import {View, Button, StyleSheet} from 'react-native';
-import secrets from '../config/secrets.js';
-import * as firebase from 'firebase';
+import AuthService from './service/AuthService.js';
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -11,28 +9,14 @@ export default class LoginScreen extends React.Component {
 
   constructor() {
     super()
-    this.loginWithFacebook = this.loginWithFacebook.bind(this)
-  }
-
-  async loginWithFacebook() {
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
-      secrets.facebookSecrets.appId,
-      { permissions: ['public_profile', 'email'] }
-    );
-
-    if (type === 'success') {
-      const credential = firebase.auth.FacebookAuthProvider.credential(token);
-      firebase.auth().signInWithCredential(credential).catch((error) => {
-        console.log(error);
-      });
-    }
+    this.authService = new AuthService();
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Button
-          onPress={this.loginWithFacebook}
+          onPress={this.authService.loginWithFacebook}
           title="Login"
           color="#841584"
           accessibilityLabel="Login"

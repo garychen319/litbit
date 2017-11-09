@@ -1,8 +1,8 @@
-import * as firebase from firebase;
+import * as firebase from 'firebase';
 
 export default class BaseDatabaseService {
-  constructor() {
-    this.database = firebase.database();
-    this.refPrefix = 'development/'
+  constructor(refPrefix) {
+    this.refPrefix = 'development/' + refPrefix;
+    this.ref = firebase.database().ref(this.refPrefix);
   }
 }

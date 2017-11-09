@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
 import * as firebase from 'firebase';
-// import {StackNavigator} from 'react-navigation';
 
+import AuthService from './service/AuthService.js';
 
 const _ = require('lodash');
 
@@ -13,6 +13,7 @@ export default class HomeScreen extends React.Component {
 
   constructor() {
     super();
+    this.authService = new AuthService();
     this.state = {
       cart: {
         1: 0,
@@ -37,14 +38,6 @@ export default class HomeScreen extends React.Component {
     }
   }
 
-  signOut() {
-    firebase.auth().signOut().then(() => {
-      console.log("Signed out!")
-    }, (error) => {
-      console.log("Error occured")
-    })
-  }
-
   checkoutCart() {
     var mergedCart = _.forEach(this.state.items, (item)=> {
       item.quantityOrdered = this.state.cart[item.key]
@@ -54,7 +47,6 @@ export default class HomeScreen extends React.Component {
 
   delivery() {
     this.props.navigation.navigate('Delivery')
-    console.log('Navigate to delivery mode')
   }
 
   clearCart() {
@@ -81,6 +73,12 @@ export default class HomeScreen extends React.Component {
           title="Delivery"
           color="#841584"
           accessibilityLabel="Delivery"
+        />
+        <Button
+          style={styles.checkoutButton}
+          onPress={() => {this.authService.signOut()}}
+          title="Log out"
+          color="#841584"
         />
         <FlatList
           contentContainerStyle={styles.feed}
@@ -112,7 +110,7 @@ export default class HomeScreen extends React.Component {
               }}
             />
           </View>
-          
+
           <Button
             style={styles.checkoutButton}
             onPress={() => this.clearCart()}
