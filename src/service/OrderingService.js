@@ -1,4 +1,3 @@
-import * as firebase from firebase;
 import BaseDatabaseService from './BaseDatabaseService.js';
 const uuid = require('uuid/v4');
 
@@ -19,3 +18,19 @@ export default class OrderingService extends BaseDatabaseService {
     });
   }
 }
+
+
+/*
+Ordering flow
+
+1. Order comes in
+2. Get list of all available deliverers
+3. For each deliverer:
+  send a push notification
+  if accepts
+    assign order to deliverer
+    write order to database
+    update deliverer status
+    return
+4. return error: no deliverers found.
+*/
