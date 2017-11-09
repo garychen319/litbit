@@ -13,11 +13,26 @@ export default class ConfirmationScreen extends React.Component {
 
   constructor() {
     super();
+    this.state = {
+      cart: {},
+      price: 0,
+    }
   }
 
   confirmCart() {
     this.props.navigation.navigate('OrderConfirmed')
-    console.log('Navigate to order confirmed screen')
+  }
+
+  componentDidMount() {
+    var cart = this.props.navigation.state.params.cart
+    var price = _.sum(_.map(cart, (item) => {
+      return item.quantityOrdered*item.pricePerDefaultQuantity
+    }))
+
+    this.setState(_.merge({}, this.state, {
+      cart: this.props.navigation.state.params.cart,
+      price: price,
+    }))
   }
 
   render() {
@@ -27,27 +42,12 @@ export default class ConfirmationScreen extends React.Component {
             Ready to confirm your order?
           </Text>
           <FlatList
-            data={[
-              {
-                key: 1,
-                title: 'Cups',
-                imageUrl: require('./img/cup.png'),
-                quantityOrdered: 10,
-                price: 10
-              },
-              {
-                key: 2,
-                title: 'Balls',
-                imageUrl: require('./img/cup.png'),
-                quantityOrdered: 2,
-                price: 5
-              },
-            ]}
+            data={this.props.navigation.state.params.cart}
             renderItem={({item}) => <Text style={styles.itemListed}>
             {item.title}: {item.quantityOrdered}
             </Text>}
             />
-          <Text style={styles.price}>Price: </Text>
+          <Text style={styles.price}>Price: {this.state.price} </Text>
 
         <View style={styles.checkoutWrapper}>
           <Button
