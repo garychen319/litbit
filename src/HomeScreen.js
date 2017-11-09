@@ -22,16 +22,20 @@ export default class HomeScreen extends React.Component {
         {
           key: 1,
           title: 'Cups',
-          imageUrl: require('./img/cup.png'),
+          imageUrl: require('./img/cupstxt1.png'),
           defaultQuantity: 10,
           pricePerDefaultQuantity: 2.99,
         },
         {
           key: 2,
           title: 'Balls',
-          imageUrl: require('./img/ball.png'),
+          imageUrl: require('./img/ballstxt1.png'),
           defaultQuantity: 2,
+<<<<<<< HEAD
           pricePerDefaultQuantity: 2,
+=======
+          pricePerDefaultQuantity: 2.99,
+>>>>>>> frontend stuff
         },
       ]
     }
@@ -95,7 +99,6 @@ export default class HomeScreen extends React.Component {
                     source={item.imageUrl}
                   />
                 </TouchableHighlight>
-                <Text> { item.title } </Text>
               </View>
             )
           }}
@@ -113,6 +116,7 @@ export default class HomeScreen extends React.Component {
               }}
             />
           </View>
+          
           <Button
             style={styles.checkoutButton}
             onPress={() => this.clearCart()}
@@ -135,17 +139,20 @@ export default class HomeScreen extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
     flex: 1,
+    backgroundColor: '#ebebeb',
   },
   feed: {
     alignItems: 'center',
   },
   itemButtonContainer: {
     alignItems: 'center',
+    backgroundColor: '#66b4f3',
+
   },
   itemButton: {
-    width: 200,
+    height: 200,
+    width:200,
   },
   checkoutButton: {
   },
@@ -153,5 +160,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 15,
+  },
+  submit:{
+    // marginRight:70,
+    // marginLeft:70,
+    // marginTop:10,
+    paddingTop:10,
+    paddingBottom:10,
+    paddingRight:10,
+    paddingLeft:10,
+    backgroundColor:'grey',
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#fff'
+  },
+  submitText:{
+      color:'#fff',
+      textAlign:'center',
   }
 });
