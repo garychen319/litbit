@@ -1,15 +1,22 @@
 import React from 'react';
 import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
 import * as firebase from 'firebase';
-import {StackNavigator} from 'react-navigation';
-
+import {StackNavigator, NavigationActions} from 'react-navigation';
 
 const _ = require('lodash');
 
+const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: 'Home'})
+  ]
+})
+
 export default class DeliveryScreen extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: "Delivery Mode",
-  };
+    headerRight: <Button title='Order Mode' onPress={() => navigation.dispatch(resetAction)} />
+  });
 
   constructor() {
     super();

@@ -9,13 +9,7 @@ export default class OrderingService extends BaseDatabaseService {
   }
 
   placeOrder(cart) {
-    var uuid = uuidv4();
-    this.database.ref('orders/' + uuid).set({
-      uuid: uuid,
-      user: firebase.auth().currentUser,
-      cart: cart,
-      status: 0,
-    });
+
   }
 
   getAvailableDeliverers() {

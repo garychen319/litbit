@@ -1,19 +1,30 @@
 import React from 'react';
 import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
 import * as firebase from 'firebase';
+import { NavigationActions } from 'react-navigation'
 
 import AuthService from './service/AuthService.js';
+import DelivererService from './service/DelivererService.js';
 
 const _ = require('lodash');
 
+const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: 'Delivery'})
+  ]
+})
+
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: "Home",
-  };
+    headerRight: <Button title='Delivery Mode' onPress={() => navigation.dispatch(resetAction)} />
+  });
 
   constructor() {
     super();
     this.authService = new AuthService();
+    this.delivererService = new DelivererService();
     this.state = {
       cart: {
         1: 0,
@@ -67,17 +78,17 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button
-          style={styles.checkoutButton}
-          onPress={() => {this.delivery()}}
-          title="Delivery"
-          color="#841584"
-          accessibilityLabel="Delivery"
-        />
+
         <Button
           style={styles.checkoutButton}
           onPress={() => {this.authService.signOut()}}
           title="Log out"
+          color="#841584"
+        />
+        <Button
+          style={styles.checkoutButton}
+          onPress={() => {this.delivererService.addAvailableDeliverer(this.props.screenProps.user.providerData[0].uid)}}
+          title="Add Deliverer"
           color="#841584"
         />
         <FlatList

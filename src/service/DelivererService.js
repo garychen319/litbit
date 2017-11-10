@@ -1,5 +1,4 @@
 import BaseDatabaseService from './BaseDatabaseService.js';
-const uuid = require('uuid/v4');
 
 export default class DelivererService extends BaseDatabaseService {
   constructor() {

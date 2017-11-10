@@ -8,7 +8,7 @@ const _ = require('lodash');
 
 export default class ConfirmationScreen extends React.Component {
   static navigationOptions = {
-    title: "Confirm Order",
+    title: "Order",
     headerLeft: null,
   };
 
@@ -21,7 +21,6 @@ export default class ConfirmationScreen extends React.Component {
   }
 
   returnHome() {
-
     this.props.navigation.navigate('Home')
   }
 
@@ -45,7 +44,7 @@ export default class ConfirmationScreen extends React.Component {
           </Text>
 
           <Text style={styles.header2}>Order Summary: </Text>
-           
+
           <FlatList
             data={this.props.navigation.state.params.cart}
             renderItem={({item}) => <Text style={styles.itemListed}>
