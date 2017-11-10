@@ -4,6 +4,8 @@ import LoginScreen from './src/LoginScreen.js';
 import HomeScreen from './src/HomeScreen.js';
 import ConfirmationScreen from './src/ConfirmationScreen.js';
 import OrderConfirmedScreen from './src/OrderConfirmedScreen.js';
+import DeliveryScreen from './src/DeliveryScreen.js';
+import AcceptOrderScreen from './src/AcceptOrderScreen.js';
 
 import * as firebase from 'firebase';
 import {StackNavigator} from 'react-navigation';
@@ -18,7 +20,10 @@ const AuthNavigator = StackNavigator({
 const MainNavigator = StackNavigator({
   Home: { screen: HomeScreen },
   Confirm: { screen: ConfirmationScreen },
+  Delivery: { screen: DeliveryScreen },
   OrderConfirmed: { screen: OrderConfirmedScreen },
+  AcceptOrder: { screen: AcceptOrderScreen },
+  // Home: { screen: HomeScreen },
 });
 
 export default class App extends React.Component {
