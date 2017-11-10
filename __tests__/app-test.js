@@ -8,6 +8,4 @@ import AcceptOrderScreen from '../src/AcceptOrderScreen.js';
 it('renders correctly', () => {
   const tree = renderer.create(<App />).toJSON();
   expect(tree).toMatchSnapshot();
-  const treeAcceptOrderScreen = renderer.create(<AcceptOrderScreen />).toJSON();
-  expect(treeAcceptOrderScreen).toMatchSnapshot();
 });
