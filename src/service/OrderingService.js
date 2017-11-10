@@ -1,10 +1,11 @@
 import BaseDatabaseService from './BaseDatabaseService.js';
+import DelivererService from './service/DelivererService.js';
 const uuid = require('uuid/v4');
 
 export default class OrderingService extends BaseDatabaseService {
   constructor() {
-    this.refPrefix = this.refPrefix + 'orders/';
-    this.ordersRef = this.database.ref(this.refPrefix)
+    super('/orders/');
+    this.delivererService = new DelivererService();
   }
 
   placeOrder(cart) {
@@ -15,6 +16,10 @@ export default class OrderingService extends BaseDatabaseService {
       cart: cart,
       status: 0,
     });
+  }
+
+  getAvailableDeliverers() {
+
   }
 }
 
