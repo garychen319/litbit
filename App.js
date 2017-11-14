@@ -6,6 +6,7 @@ import ConfirmationScreen from './src/ConfirmationScreen.js';
 import OrderConfirmedScreen from './src/OrderConfirmedScreen.js';
 import DeliveryScreen from './src/DeliveryScreen.js';
 import AcceptOrderScreen from './src/AcceptOrderScreen.js';
+import ProfileScreen from './src/ProfileScreen.js';
 
 import * as firebase from 'firebase';
 import {StackNavigator} from 'react-navigation';
@@ -22,7 +23,8 @@ const MainNavigator = StackNavigator({
   Confirm: { screen: ConfirmationScreen },
   Delivery: { screen: DeliveryScreen },
   OrderConfirmed: { screen: OrderConfirmedScreen },
-  AcceptOrder: { screen: AcceptOrderScreen }
+  AcceptOrder: { screen: AcceptOrderScreen },
+  Profile: { screen: ProfileScreen }
   // Home: { screen: HomeScreen },
 });
 

@@ -37,6 +37,8 @@ export default class HomeScreen extends React.Component {
     }
   }
 
+
+
   signOut() {
     firebase.auth().signOut().then(() => {
       console.log("Signed out!")
@@ -57,6 +59,10 @@ export default class HomeScreen extends React.Component {
     console.log('Navigate to delivery mode')
   }
 
+  profile() {
+    this.props.navigation.navigate('Profile')
+  }
+
   clearCart() {
     this.setState(_.merge({}, this.state, {
       cart: _.mapValues(this.state.cart, () => 0)
@@ -71,9 +77,20 @@ export default class HomeScreen extends React.Component {
       }
     }))
   }
+  onPress_decrement(item) {
+    var count = this.state.cart[item.key];
+    if (count > 0){
+	    this.setState(_.merge({}, this.state, {
+	      cart: {
+	        [item.key]: count-1,
+	      }
+	    }))
+	}
+  }
 
   render() {
     return (
+
       <View style={styles.container}>
         <Button
           style={styles.checkoutButton}
@@ -82,6 +99,13 @@ export default class HomeScreen extends React.Component {
           color="#841584"
           accessibilityLabel="Delivery"
         />
+        <Button
+          style={styles.checkoutButton}
+          onPress={() => {this.profile()}}
+          title="Profile"
+          color="#841584"
+          accessibilityLabel="Profile"
+        />
         <FlatList
           contentContainerStyle={styles.feed}
           horizontal = {true}
@@ -89,16 +113,36 @@ export default class HomeScreen extends React.Component {
           renderItem={({item}) => {
             return (
               <View style={styles.itemButtonContainer}>
-                <TouchableHighlight onPress={() => this.onPress(item)}>
+
+              	<TouchableHighlight onPress={() => {this.onPress(item)}}>
+			      <Image
+			      	style={styles.arrow}
+			        source={require('./img/up_arrow.png')}
+			      />
+			    </TouchableHighlight>
+
+                <TouchableHighlight>
                   <Image
                     style={styles.itemButton}
                     source={item.imageUrl}
                   />
                 </TouchableHighlight>
+
+           		<TouchableHighlight onPress={() => {this.onPress_decrement(item)}}>
+			      <Image
+			      	style={styles.arrow}
+			        source={require('./img/down_arrow.png')}
+			      />
+			    </TouchableHighlight>
+
               </View>
             )
           }}
         />
+
+
+
+
         <View style={styles.checkoutWrapper}>
           <View>
             <FlatList
@@ -149,6 +193,10 @@ const styles = StyleSheet.create({
   itemButton: {
     height: 200,
     width:200,
+  },
+  arrow: {
+    height: 70,
+    width:70,
   },
   checkoutButton: {
   },
