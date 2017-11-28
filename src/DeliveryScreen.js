@@ -109,7 +109,7 @@ export default class DeliveryScreen extends React.Component {
           <Text>
             [orderer name] ordered [order detail] at [order address]
           </Text>
-          <Button title="Remove Order" onPress={() => this.delivererService.removeOrderFromDeliverer("10210669950444906")}/>
+          <Button title="Remove Order" onPress={() => this.delivererService.removeOrderFromDeliverer(this.state.delivererUid)}/>
           <Button
             onPress={() => {this.acceptOrder()}}
             title="Accept"
@@ -124,7 +124,7 @@ export default class DeliveryScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Button title="Trigger Order" onPress={() => this.triggerOrder()}/>
-        <Button title="Remove Order" onPress={() => this.delivererService.removeOrderFromDeliverer("10210669950444906")}/>
+        <Button title="Remove Order" onPress={() => this.delivererService.removeOrderFromDeliverer(this.state.delivererUid)}/>
         <Text>
           No orders yet!
         </Text>
@@ -135,7 +135,7 @@ export default class DeliveryScreen extends React.Component {
   renderDelivery() {
     return (
       <View style={styles.container}>
-        <Button title="Finish Order" onPress={() => this.orderingService.finishOrder("10210669950444906")}/>
+        <Button title="Finish Order" onPress={() => this.orderingService.finishOrder(this.state.delivererUid)}/>
         <Text>
           Delivery in progress
         </Text>
