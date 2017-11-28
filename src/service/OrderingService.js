@@ -1,5 +1,5 @@
 import BaseDatabaseService from './BaseDatabaseService.js';
-import DelivererService from './service/DelivererService.js';
+import DelivererService from './DelivererService.js';
 const uuid = require('uuid/v4');
 
 export default class OrderingService extends BaseDatabaseService {
@@ -8,12 +8,9 @@ export default class OrderingService extends BaseDatabaseService {
     this.delivererService = new DelivererService();
   }
 
-  placeOrder(cart) {
-
-  }
-
-  getAvailableDeliverers() {
-
+  finishOrder(delivererUid) {
+    var finishedOrder = this.delivererService.removeOrderFromDeliverer(delivererUid)
+    this.ref.push(finishedOrder);
   }
 }
 
@@ -24,7 +21,7 @@ Ordering flow
 1. Order comes in
 2. Get list of all available deliverers
 3. For each deliverer:
-  send a push notification
+  await notifyDeliverer(delivererId, order)
   if accepts
     assign order to deliverer
     write order to database

@@ -4,7 +4,7 @@ import * as firebase from 'firebase';
 import { NavigationActions } from 'react-navigation'
 
 import AuthService from './service/AuthService.js';
-import DelivererService from './service/DelivererService.js';
+import OrderingService from './service/OrderingService.js';
 
 const _ = require('lodash');
 
@@ -24,7 +24,7 @@ export default class HomeScreen extends React.Component {
   constructor() {
     super();
     this.authService = new AuthService();
-    this.delivererService = new DelivererService();
+    this.orderingService = new OrderingService();
     this.state = {
       cart: {
         1: 0,
@@ -87,8 +87,20 @@ export default class HomeScreen extends React.Component {
         />
         <Button
           style={styles.checkoutButton}
-          onPress={() => {this.delivererService.addAvailableDeliverer(this.props.screenProps.user.providerData[0].uid)}}
-          title="Add Deliverer"
+          onPress={() => {
+            var mergedCart = _.forEach(this.state.items, (item)=> {
+              item.quantityOrdered = this.state.cart[item.key]
+            })
+            var order = {
+              cart: mergedCart,
+              delivererId: null,
+              ordererId: this.props.screenProps.user.providerData[0].uid
+            }
+
+            console.log(order)
+            this.orderingService.placeOrder(order)
+          }}
+          title="Add Cart"
           color="#841584"
         />
         <FlatList
