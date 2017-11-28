@@ -1,19 +1,30 @@
 import React from 'react';
 import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
 import * as firebase from 'firebase';
+import { NavigationActions } from 'react-navigation'
 
 import AuthService from './service/AuthService.js';
+import OrderingService from './service/OrderingService.js';
 
 const _ = require('lodash');
 
+const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: 'Delivery'})
+  ]
+})
+
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: "Home",
-  };
+    headerRight: <Button title='Delivery Mode' onPress={() => navigation.dispatch(resetAction)} />
+  });
 
   constructor() {
     super();
     this.authService = new AuthService();
+    this.orderingService = new OrderingService();
     this.state = {
       cart: {
         1: 0,
@@ -68,17 +79,29 @@ export default class HomeScreen extends React.Component {
     // const {items} = this.state.items;
     return (
       <View style={styles.container}>
-        <Button
-          style={styles.checkoutButton}
-          onPress={() => {this.delivery()}}
-          title="Delivery"
-          color="#841584"
-          accessibilityLabel="Delivery"
-        />
+
         <Button
           style={styles.checkoutButton}
           onPress={() => {this.authService.signOut()}}
           title="Log out"
+          color="#841584"
+        />
+        <Button
+          style={styles.checkoutButton}
+          onPress={() => {
+            var mergedCart = _.forEach(this.state.items, (item)=> {
+              item.quantityOrdered = this.state.cart[item.key]
+            })
+            var order = {
+              cart: mergedCart,
+              delivererId: null,
+              ordererId: this.props.screenProps.user.providerData[0].uid
+            }
+
+            console.log(order)
+            this.orderingService.placeOrder(order)
+          }}
+          title="Add Cart"
           color="#841584"
         />
         <FlatList

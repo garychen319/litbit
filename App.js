@@ -19,7 +19,7 @@ const AuthNavigator = StackNavigator({
 });
 
 const MainNavigator = StackNavigator({
-  Home: { screen: HomeScreen },
+  Home: { screen: DeliveryScreen },
   Confirm: { screen: ConfirmationScreen },
   Delivery: { screen: DeliveryScreen },
   OrderConfirmed: { screen: OrderConfirmedScreen },
