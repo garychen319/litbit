@@ -19,12 +19,11 @@ const AuthNavigator = StackNavigator({
 });
 
 const MainNavigator = StackNavigator({
-  Home: { screen: DeliveryScreen },
+  Home: { screen: HomeScreen },
   Confirm: { screen: ConfirmationScreen },
   Delivery: { screen: DeliveryScreen },
   OrderConfirmed: { screen: OrderConfirmedScreen },
   AcceptOrder: { screen: AcceptOrderScreen },
-  // Home: { screen: HomeScreen },
 });
 
 export default class App extends React.Component {
