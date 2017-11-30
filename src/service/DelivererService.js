@@ -1,11 +1,13 @@
 import BaseDatabaseService from './BaseDatabaseService.js';
 const _ = require('lodash');
 
+
 export default class DelivererService extends BaseDatabaseService {
   constructor() {
     super('/deliverers/');
     this.addAvailableDeliverer = this.addAvailableDeliverer.bind(this);
     this.removeAvailableDeliverer = this.removeAvailableDeliverer.bind(this);
+    this.queryDeliverer = this.queryDeliverer.bind(this);
   }
 
   getAvailableDeliverers() {
@@ -34,6 +36,21 @@ export default class DelivererService extends BaseDatabaseService {
         childSnapshot.ref.remove();
       })
     })
+  }
+
+  queryDeliverer(order, uid) {
+    // this.addOrderToDelivererPromise(order, uid).then((response) => {
+    //   this.ref.child('available/' + uid + '/order').on('value', (snapshot) => {
+    //     var data = snapshot.val();
+    //     console.log(data)
+    //   });
+    // })
+    this.addOrderToDeliverer(order, uid);
+
+  }
+
+  addOrderToDelivererPromise(newOrder, uid) {
+    return this.ref.child('available/' + uid).set({order: newOrder})
   }
 
   addOrderToDeliverer(newOrder, uid) {

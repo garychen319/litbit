@@ -6,7 +6,7 @@ import { NavigationActions } from 'react-navigation'
 import AuthService from './service/AuthService.js';
 import OrderService from './service/OrderService.js';
 import OrdererService from './service/OrdererService.js';
-
+import DelivererService from './service/DelivererService.js';
 const _ = require('lodash');
 
 const resetAction = NavigationActions.reset({
@@ -35,6 +35,8 @@ const defaultCart = {
   },
 }
 
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: "Home",
@@ -47,6 +49,7 @@ export default class HomeScreen extends React.Component {
     this.authService = new AuthService();
     this.orderService = new OrderService();
     this.ordererService = new OrdererService();
+    this.delivererService = new DelivererService();
     this.state = {
       cart: defaultCart,
       isOrderInProgress: false,
@@ -76,6 +79,7 @@ export default class HomeScreen extends React.Component {
   }
 
   componentWillUnmount() {
+    var uid = this.props.screenProps.user.providerData[0].uid;
     this.ordererService.ref.child(uid + '/order').off();
   }
 
@@ -126,6 +130,35 @@ export default class HomeScreen extends React.Component {
   }
 
 
+  async queryDeliverer() {
+    var delivererUids = [
+      "10210669950444906",
+      "10213386516072823",
+    ]
+    var cart = this.state.cart
+    var ordererUid = this.props.screenProps.user.providerData[0].uid
+    cart.ordererId = ordererUid
+
+    for(i=0; i<delivererUids.length; i++) {
+      console.log(uid)
+      var uid = delivererUids[i];
+      var order = this.delivererService.getOrderFromDeliverer(uid)
+      if (!order) {
+        this.delivererService.addOrderToDeliverer(cart, uid)
+        await sleep(10000);
+        var order = this.delivererService.getOrderFromDeliverer(uid)
+        if (!_.isNull(order) && !_.isUndefined(order.delivererId)) {
+          console.log("Accepted!")
+          this.ordererService.addOrderToOrderer(cart, ordererUid)
+          break;
+        } else {
+          console.log("Not accepted!")
+          this.delivererService.removeOrderFromDeliverer(uid)
+        }
+      }
+    }
+  }
+
   renderHome() {
     return (
       <View style={styles.container}>
@@ -133,6 +166,12 @@ export default class HomeScreen extends React.Component {
           style={styles.checkoutButton}
           onPress={() => {this.authService.signOut()}}
           title="Log out"
+          color="#841584"
+        />
+        <Button
+          style={styles.checkoutButton}
+          onPress={() => {this.queryDeliverer()}}
+          title="Query Deliverers"
           color="#841584"
         />
         <Button

@@ -3,6 +3,7 @@ import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text,
 import * as firebase from 'firebase';
 import {StackNavigator} from 'react-navigation';
 
+import DelivererService from'./service/DelivererService.js';
 import OrdererService from './service/OrdererService.js';
 
 const _ = require('lodash');
@@ -15,16 +16,32 @@ export default class ConfirmationScreen extends React.Component {
   constructor() {
     super();
     this.ordererService = new OrdererService()
+    this.delivererService = new DelivererService();
+
     this.state = {
       cart: {},
       price: 0,
+      availableDeliverers: [],
     }
   }
 
   confirmCart() {
     var uid = this.props.screenProps.user.providerData[0].uid
+
+    _.each(this.state.availableDeliverers, (delivererUid) => {
+      
+    })
     this.ordererService.addOrderToOrdererPromise(this.state.cart, uid).then((response) => {
       this.props.navigation.navigate('OrderConfirmed', {'user': this.props.screenProps.user, 'cart': this.props.navigation.state.params.cart})
+    })
+  }
+
+  componentWillMount() {
+    this.delivererService.ref.child('available/').on('value', (data) => {
+      console.log(_.keys(data.val()))
+      this.setState({
+        availableDeliverers: _.keys(data.val())
+      })
     })
   }
 
