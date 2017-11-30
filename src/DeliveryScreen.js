@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
 import AuthService from './service/AuthService.js';
-import OrderingService from './service/OrderingService.js';
+import OrderService from './service/OrderService.js';
 import DelivererService from './service/DelivererService.js';
 
 import {StackNavigator, NavigationActions} from 'react-navigation';
@@ -59,7 +59,7 @@ export default class DeliveryScreen extends React.Component {
     super();
     this.authService = new AuthService();
     this.delivererService = new DelivererService();
-    this.orderingService = new OrderingService();
+    this.orderService = new OrderService();
     this.state = {
       pendingDelivery: null,
       delivererUid: null,
@@ -68,8 +68,8 @@ export default class DeliveryScreen extends React.Component {
 
   triggerOrder() {
     var order = {
-      cart: [
-        {
+      cart: {
+        1: {
           defaultQuantity: 10,
           imageUrl: 1,
           key: 1,
@@ -77,7 +77,7 @@ export default class DeliveryScreen extends React.Component {
           quantityOrdered: 5,
           title: "Cups",
         },
-        {
+        2: {
           defaultQuantity: 2,
           imageUrl: 2,
           key: 2,
@@ -85,7 +85,7 @@ export default class DeliveryScreen extends React.Component {
           quantityOrdered: 4,
           title: "Balls",
         },
-      ],
+      },
       delivererId: null,
       ordererId: "00000000000000001",
     }
@@ -135,7 +135,11 @@ export default class DeliveryScreen extends React.Component {
   renderDelivery() {
     return (
       <View style={styles.container}>
+<<<<<<< HEAD
         <Button title="Finish Order" onPress={() => this.orderingService.finishOrder(this.state.delivererUid)}/>
+=======
+        <Button title="Finish Order" onPress={() => this.orderService.finishOrder("10210669950444906")}/>
+>>>>>>> UI fixes
         <Text>
           Delivery in progress
         </Text>
