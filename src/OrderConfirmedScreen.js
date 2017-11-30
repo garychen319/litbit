@@ -46,7 +46,7 @@ export default class ConfirmationScreen extends React.Component {
           <Text style={styles.header2}>Order Summary: </Text>
 
           <FlatList
-            data={this.props.navigation.state.params.cart}
+            data={_.values(this.state.cart)}
             renderItem={({item}) => <Text style={styles.itemListed}>
             {item.title}: {item.quantityOrdered}
             </Text>}

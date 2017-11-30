@@ -3,6 +3,7 @@ import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text,
 import * as firebase from 'firebase';
 import {StackNavigator} from 'react-navigation';
 
+import OrdererService from './service/OrdererService.js';
 
 const _ = require('lodash');
 
@@ -13,6 +14,7 @@ export default class ConfirmationScreen extends React.Component {
 
   constructor() {
     super();
+    this.ordererService = new OrdererService()
     this.state = {
       cart: {},
       price: 0,
@@ -20,8 +22,10 @@ export default class ConfirmationScreen extends React.Component {
   }
 
   confirmCart() {
-
-    this.props.navigation.navigate('OrderConfirmed', {'user': this.props.screenProps.user, 'cart': this.props.navigation.state.params.cart})
+    var uid = this.props.screenProps.user.providerData[0].uid
+    this.ordererService.addOrderToOrdererPromise(this.state.cart, uid).then((response) => {
+      this.props.navigation.navigate('OrderConfirmed', {'user': this.props.screenProps.user, 'cart': this.props.navigation.state.params.cart})
+    })
   }
 
   componentDidMount() {
@@ -43,7 +47,7 @@ export default class ConfirmationScreen extends React.Component {
             Ready to confirm your order?
           </Text>
           <FlatList
-            data={this.props.navigation.state.params.cart}
+            data={_.values(this.props.navigation.state.params.cart)}
             renderItem={({item}) => <Text style={styles.itemListed}>
             {item.title}: {item.quantityOrdered}
             </Text>}

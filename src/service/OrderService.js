@@ -2,7 +2,7 @@ import BaseDatabaseService from './BaseDatabaseService.js';
 import DelivererService from './DelivererService.js';
 const uuid = require('uuid/v4');
 
-export default class OrderingService extends BaseDatabaseService {
+export default class OrderService extends BaseDatabaseService {
   constructor() {
     super('/orders/');
     this.delivererService = new DelivererService();
