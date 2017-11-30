@@ -16,6 +16,25 @@ const resetAction = NavigationActions.reset({
   ]
 })
 
+const defaultCart = {
+  1: {
+    key: 1,
+    title: 'Cups',
+    imageUrl: require('./img/cupstxt1.png'),
+    defaultQuantity: 10,
+    pricePerDefaultQuantity: 2.99,
+    quantityOrdered: 0,
+  },
+  2: {
+    key: 2,
+    title: 'Balls',
+    imageUrl: require('./img/ballstxt1.png'),
+    defaultQuantity: 2,
+    pricePerDefaultQuantity: 2.99,
+    quantityOrdered: 0,
+  },
+}
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: "Home",
@@ -29,50 +48,36 @@ export default class HomeScreen extends React.Component {
     this.orderService = new OrderService();
     this.ordererService = new OrdererService();
     this.state = {
-      cart: {
-        1: {
-          key: 1,
-          title: 'Cups',
-          imageUrl: require('./img/cupstxt1.png'),
-          defaultQuantity: 10,
-          pricePerDefaultQuantity: 2.99,
-          quantityOrdered: 0,
-        },
-        2: {
-          key: 2,
-          title: 'Balls',
-          imageUrl: require('./img/ballstxt1.png'),
-          defaultQuantity: 2,
-          pricePerDefaultQuantity: 2.99,
-          quantityOrdered: 0,
-        },
-      },
+      cart: defaultCart,
       isOrderInProgress: false,
     }
   }
 
-  // componentWillMount() {
-  //   var uid = this.props.screenProps.user.providerData[0].uid;
-  //   if(!_.isNull(uid)) {
-  //     this.setState(_.merge({}, this.state, {
-  //       ordererUid: uid
-  //     }))
-  //   }
-  //
-  //   var orderInProgress = this.ordererService.getOrderFromOrderer(uid);
-  //   if (!_.isNull(orderInProgress)) {
-  //     this.setState({
-  //
-  //     })
-  //   }
-  //   this.ordererService.ref.child(uid + '/order').on('value', (data) => {
-  //     this.setState(())
-  //   })
-  // }
-  //
-  // componentWillUnmount() {
-  //   this.ordererService.ref.child(uid + '/order').off();
-  // }
+  componentWillMount() {
+    var uid = this.props.screenProps.user.providerData[0].uid;
+    if(!_.isNull(uid)) {
+      this.setState(_.merge({}, this.state, {
+        ordererUid: uid
+      }))
+    }
+    this.ordererService.ref.child(uid + '/order').on('value', (data) => {
+      if (!_.isNull(data.val())) {
+        this.setState(_.merge({}, this.state, {
+          cart: data.cart,
+          isOrderInProgress: true,
+        }))
+      } else {
+        this.setState(_.merge({}, this.state, {
+          cart: defaultCart,
+          isOrderInProgress: false,
+        }))
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    this.ordererService.ref.child(uid + '/order').off();
+  }
 
   checkoutCart() {
     this.props.navigation.navigate('Confirm', {'user': this.props.screenProps.user, 'cart': this.state.cart})
@@ -101,13 +106,21 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
-    return this.renderHome();
+    return this.state.isOrderInProgress ? this.renderInProgress() : this.renderHome();
   }
 
   renderInProgress() {
     return (
       <View style={styles.container}>
-        <Text>Order is in progress</Text>
+        <View style={styles.itemButtonContainer}>
+          <Text>Order is in progress</Text>
+          <Button
+            style={styles.checkoutButton}
+            onPress={() => {this.ordererService.removeOrderFromOrderer(this.props.screenProps.user.providerData[0].uid)}}
+            title="Finish order"
+            color="#841584"
+          />
+        </View>
       </View>
     )
   }

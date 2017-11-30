@@ -19,7 +19,7 @@ export default class OrdererService extends BaseDatabaseService {
     this.ref.child(uid + '/order').once('value', (snapshot) => {
       if (snapshot.exists()) {
         removedOrder = snapshot.val();
-        snapshot.ref.set(false);
+        snapshot.ref.remove()
       } else {
         console.log("Snapshot does not exist");
       }
