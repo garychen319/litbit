@@ -1,0 +1,302 @@
+{
+  "development" : {
+    "deliverers" : {
+      "available" : {
+        "10210669950444906" : {
+          "order" : false
+        },
+        "10213386516072823" : {
+          "order" : {
+            "cart" : [ {
+              "defaultQuantity" : 10,
+              "imageUrl" : 1,
+              "key" : 1,
+              "pricePerDefaultQuantity" : 2.99,
+              "quantityOrdered" : 5,
+              "title" : "Cups"
+            }, {
+              "defaultQuantity" : 2,
+              "imageUrl" : 2,
+              "key" : 2,
+              "pricePerDefaultQuantity" : 2.99,
+              "quantityOrdered" : 4,
+              "title" : "Balls"
+            } ],
+            "ordererId" : "00000000000000001"
+          }
+        },
+        "10214312867285232" : {
+          "order" : false
+        }
+      }
+    },
+    "orders" : {
+      "-L-2H7FCxru1Sbe_co9x" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10213386516072823",
+        "ordererId" : "00000000000000001"
+      },
+      "-L-2HCjHMyAy8emVevAf" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10214312867285232",
+        "ordererId" : "00000000000000001"
+      },
+      "-L-2HH_pOLl3qdBZe9f-" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10214312867285232",
+        "ordererId" : "00000000000000001"
+      },
+      "-L-2HyeYiNqyqLSkZRLP" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10213386516072823",
+        "ordererId" : "00000000000000001"
+      },
+      "-L-2I18p30uIh_UULbES" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10213386516072823",
+        "ordererId" : "00000000000000001"
+      },
+      "-L-2JfZG-VY4ktkeVxo-" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10213386516072823",
+        "ordererId" : "00000000000000001"
+      },
+      "-L-2MvWNxcg83zAZ-Uh8" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10213386516072823",
+        "ordererId" : "00000000000000001"
+      },
+      "-L-2RbVw9nkgWQkSaA4h" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10213386516072823",
+        "ordererId" : "00000000000000001"
+      },
+      "-L-2tl-tI0h_Uo_xujSM" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10213386516072823",
+        "ordererId" : "00000000000000001"
+      },
+      "-L-2u5tn2tVzyp8s3lBF" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10213386516072823",
+        "ordererId" : "00000000000000001"
+      },
+      "-L-4V1oyaqhriToYQHFh" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10213386516072823",
+        "ordererId" : "00000000000000001"
+      },
+      "-L-4V2b_6jqIh5GlBVaa" : {
+        "cart" : [ {
+          "defaultQuantity" : 10,
+          "imageUrl" : 1,
+          "key" : 1,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 5,
+          "title" : "Cups"
+        }, {
+          "defaultQuantity" : 2,
+          "imageUrl" : 2,
+          "key" : 2,
+          "pricePerDefaultQuantity" : 2.99,
+          "quantityOrdered" : 4,
+          "title" : "Balls"
+        } ],
+        "delivererId" : "10213386516072823",
+        "ordererId" : "00000000000000001"
+      }
+    },
+    "users" : {
+      "10210669950444906" : {
+        "displayName" : "David Lee",
+        "dorm" : {
+          "building" : "",
+          "room" : ""
+        },
+        "email" : "juhyunglee1435@gmail.com",
+        "isDeliverer" : false,
+        "photoURL" : "https://scontent.xx.fbcdn.net/v/t1.0-1/p100x100/18056908_10209159445203219_434664093076227303_n.jpg?oh=3a80add57fd22ddfb3df34b39dabe1a0&oe=5A9DAC11",
+        "providerId" : "facebook.com",
+        "uid" : "10210669950444906"
+      },
+      "10213386516072823" : {
+        "displayName" : "Gary Chen",
+        "dorm" : {
+          "building" : "",
+          "room" : ""
+        },
+        "email" : "gary.chen@columbia.edu",
+        "isDeliverer" : false,
+        "photoURL" : "https://scontent.xx.fbcdn.net/v/t1.0-1/p100x100/20293142_10212662250766643_8536835668099281273_n.jpg?oh=d3852a5c83fb083301f31b3863c04ca7&oe=5AA32190",
+        "providerId" : "facebook.com",
+        "uid" : "10213386516072823"
+      },
+      "10214312867285232" : {
+        "displayName" : "Jordan Lee",
+        "dorm" : {
+          "building" : "",
+          "room" : ""
+        },
+        "email" : "jordanlee133@gmail.com",
+        "isDeliverer" : false,
+        "photoURL" : "https://scontent.xx.fbcdn.net/v/t1.0-1/c57.175.512.512/s100x100/23659308_10214532386573077_734555591949770073_n.jpg?oh=0f548ad13eb5b1c022454057a17bf1dc&oe=5ACCA182",
+        "providerId" : "facebook.com",
+        "uid" : "10214312867285232"
+      }
+    }
+  }
+}
