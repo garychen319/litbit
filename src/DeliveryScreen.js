@@ -31,27 +31,12 @@ class AvailabilityButton extends React.Component {
   }
 }
 
-class LogoutButton extends React.Component {
-  constructor() {
-    super();
-    this.authService = new AuthService();
-  }
-
-  render() {
-    return (
-      <Button
-        title="Logout"
-        onPress={() => this.authService.signOut()}
-      />
-    )
-  }
-}
 
 export default class DeliveryScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: "Delivery Mode",
-    //headerRight: <Button title='Order Mode' onPress={() => navigation.dispatch(resetAction)}/>,
-    headerRight: <LogoutButton/>,
+    headerRight: <Button title='Order Mode' onPress={() => navigation.dispatch(resetAction)}/>,
+    // headerRight: <LogoutButton/>,
     headerLeft: <AvailabilityButton uid={screenProps.user.providerData[0].uid}/>
   });
 
@@ -135,11 +120,7 @@ export default class DeliveryScreen extends React.Component {
   renderDelivery() {
     return (
       <View style={styles.container}>
-<<<<<<< HEAD
-        <Button title="Finish Order" onPress={() => this.orderingService.finishOrder(this.state.delivererUid)}/>
-=======
-        <Button title="Finish Order" onPress={() => this.orderService.finishOrder("10210669950444906")}/>
->>>>>>> UI fixes
+        <Button title="Finish Order" onPress={() => this.orderService.finishOrder(this.state.delivererUid)}/>
         <Text>
           Delivery in progress
         </Text>
