@@ -37,10 +37,26 @@ const defaultCart = {
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+class LogoutButton extends React.Component {
+  constructor() {
+    super();
+    this.authService = new AuthService();
+  }
+
+  render() {
+    return (
+      <Button
+        title="Logout"
+        onPress={() => this.authService.signOut()}
+      />
+    )
+  }
+}
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: "Home",
-    headerLeft: null,
+    headerLeft: <LogoutButton/>,
     headerRight: <Button title='Delivery Mode' onPress={() => navigation.dispatch(resetAction)} />
   });
 
@@ -130,11 +146,7 @@ export default class HomeScreen extends React.Component {
   }
 
 
-  async queryDeliverer() {
-    var delivererUids = [
-      "10210669950444906",
-      "10213386516072823",
-    ]
+  async queryDeliverer(delivererUids) {
     var cart = this.state.cart
     var ordererUid = this.props.screenProps.user.providerData[0].uid
     cart.ordererId = ordererUid
@@ -164,28 +176,11 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         <Button
           style={styles.checkoutButton}
-          onPress={() => {this.authService.signOut()}}
-          title="Log out"
-          color="#841584"
-        />
-        <Button
-          style={styles.checkoutButton}
-          onPress={() => {this.queryDeliverer()}}
+          onPress={() => {this.queryDeliverer([
+            "10210669950444906",
+            "10213386516072823",
+          ])}}
           title="Query Deliverers"
-          color="#841584"
-        />
-        <Button
-          style={styles.checkoutButton}
-          onPress={() => {
-            var order = {
-              cart: this.state.cart,
-              delivererId: null,
-              ordererId: this.props.screenProps.user.providerData[0].uid
-            }
-
-            this.ordererService.addOrderToOrderer(order, this.props.screenProps.user.providerData[0].uid)
-          }}
-          title="Add Cart"
           color="#841584"
         />
         <FlatList

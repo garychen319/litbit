@@ -25,15 +25,42 @@ export default class ConfirmationScreen extends React.Component {
     }
   }
 
+  async queryDeliverer(delivererUids) {
+    var successful = false;
+    var cart = this.state.cart
+    var ordererUid = this.props.screenProps.user.providerData[0].uid
+    cart.ordererId = ordererUid
+
+    for(i=0; i<delivererUids.length; i++) {
+      console.log(uid)
+      var uid = delivererUids[i];
+      var order = this.delivererService.getOrderFromDeliverer(uid)
+      if (!order) {
+        this.delivererService.addOrderToDeliverer(cart, uid)
+        await sleep(10000);
+        var order = this.delivererService.getOrderFromDeliverer(uid)
+        if (!_.isNull(order) && !_.isUndefined(order.delivererId)) {
+          console.log("Accepted!")
+          this.ordererService.addOrderToOrderer(cart, ordererUid)
+          return true;
+        } else {
+          console.log("Not accepted!")
+          this.delivererService.removeOrderFromDeliverer(uid)
+        }
+      }
+    }
+    return false
+  }
+
+
   confirmCart() {
     var uid = this.props.screenProps.user.providerData[0].uid
-
-    _.each(this.state.availableDeliverers, (delivererUid) => {
-      
-    })
-    this.ordererService.addOrderToOrdererPromise(this.state.cart, uid).then((response) => {
+    var success = this.queryDeliverer();
+    if (success) {
       this.props.navigation.navigate('OrderConfirmed', {'user': this.props.screenProps.user, 'cart': this.props.navigation.state.params.cart})
-    })
+    } else {
+      console.log("Unsuccessful- try again")
+    }
   }
 
   componentWillMount() {

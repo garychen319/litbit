@@ -31,21 +31,6 @@ class AvailabilityButton extends React.Component {
   }
 }
 
-class LogoutButton extends React.Component {
-  constructor() {
-    super();
-    this.authService = new AuthService();
-  }
-
-  render() {
-    return (
-      <Button
-        title="Logout"
-        onPress={() => this.authService.signOut()}
-      />
-    )
-  }
-}
 
 export default class DeliveryScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
