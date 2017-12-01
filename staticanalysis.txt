@@ -1,0 +1,121 @@
+AuthService.js
+Warnings
+JSLint was unable to finish.
+2.7: Expected '{' and instead saw '*'.import * as firebase from 'firebase';	
+
+Function Report
+There are no functions.
+module Expo, secrets
+import from ../../config/secrets.js, expo
+
+BaseDatabaseService.js
+JSLint was unable to finish.
+0.7: Expected '{' and instead saw '*'.import * as firebase from 'firebase';
+
+DelivererService.js
+Warnings
+JSLint was unable to finish.
+3.20: Expected ';' and instead saw 'DelivererService'.export default class DelivererService extends BaseDatabaseService {
+3.37: Expected ';' and instead saw 'extends'.export default class DelivererService extends BaseDatabaseService {
+3.45: Expected ';' and instead saw 'BaseDatabaseService'.export default class DelivererService extends BaseDatabaseService {
+3.65: Expected ';' and instead saw '{'.export default class DelivererService extends BaseDatabaseService {
+3.66: Naked block.export default class DelivererService extends BaseDatabaseService {
+4.15: Expected ';' and instead saw '{'.  constructor() {
+4.16: Naked block.  constructor() {
+10.26: Expected ';' and instead saw '{'.  getAvailableDeliverers() {
+10.27: Naked block.  getAvailableDeliverers() {
+11.4: Expected 'return' to be in a function.    return this.ref.child('available/').once('value', (snapshot) => {
+11.65: Expected 'function' and instead saw '=>'.    return this.ref.child('available/').once('value', (snapshot) => {
+16.26: Unreachable '('.  toggleAvailableDeliverer(uid) {
+16.31: Expected ';' and instead saw '{'.  toggleAvailableDeliverer(uid) {
+16.32: Naked block.  toggleAvailableDeliverer(uid) {
+17.64: Expected 'function' and instead saw '=>'.    this.ref.child('available/' + uid).once('value', (snapshot) => {
+19.39: Expected ';' and instead saw '}'.        this.addAvailableDeliverer(uid)
+21.42: Expected ';' and instead saw '}'.        this.removeAvailableDeliverer(uid)
+23.6: Expected ';' and instead saw '}'.    })
+26.28: Expected ';' and instead saw '{'.  addAvailableDeliverer(uid) {
+26.29: Naked block.  addAvailableDeliverer(uid) {
+30.31: Expected ';' and instead saw '{'.  removeAvailableDeliverer(uid) {
+30.32: Naked block.  removeAvailableDeliverer(uid) {
+31.91: Expected 'function' and instead saw '=>'.    this.ref.child('available/').orderByChild('uid').equalTo(uid).once('value', (snapshot) => {
+32.39: Expected 'function' and instead saw '=>'.      snapshot.forEach((childSnapshot) => {
+34.8: Expected ';' and instead saw '}'.      })
+35.6: Expected ';' and instead saw '}'.    })
+38.36: Expected ';' and instead saw '{'.  addOrderToDeliverer(newOrder, uid) {
+38.37: Naked block.  addOrderToDeliverer(newOrder, uid) {
+39.61: Expected ';' and instead saw '}'.    this.ref.child('available/' + uid).set({order: newOrder})
+42.31: Expected ';' and instead saw '{'.  removeOrderFromDeliverer(uid) {
+42.32: Naked block.  removeOrderFromDeliverer(uid) {
+44.75: Expected 'function' and instead saw '=>'.    this.ref.child('available/' + uid + '/order').once('value', (snapshot) => {
+51.6: Expected ';' and instead saw 'return'.    })
+52.4: Expected 'return' to be in a function.    return removedOrder;
+55.23: Unreachable '('.  getOrderFromDeliverer(uid) {
+55.28: Expected ';' and instead saw '{'.  getOrderFromDeliverer(uid) {
+55.29: Naked block.  getOrderFromDeliverer(uid) {
+57.75: Expected 'function' and instead saw '=>'.    this.ref.child('available/' + uid + '/order').once('value', (snapshot) => {
+63.6: Expected ';' and instead saw 'return'.    })
+64.4: Expected 'return' to be in a function.    return order;
+67.13: Unreachable '('.  acceptOrder(uid) {
+67.18: Expected ';' and instead saw '{'.  acceptOrder(uid) {
+67.19: Naked block.  acceptOrder(uid) {
+69.25: Expected ';' and instead saw 'return'.    console.log(orderRef)
+70.4: Expected 'return' to be in a function.    return orderRef.once('value', (snapshot) => {
+70.45: Expected 'function' and instead saw '=>'.    return orderRef.once('value', (snapshot) => {
+73.65: Expected ';' and instead saw '}'.          console.log("Deliverer ID already defined is not null")
+75.52: Expected ';' and instead saw '}'.          snapshot.ref.child('delivererId').set(uid)
+78.42: Expected ';' and instead saw '}'.        console.log("Order doesn't exist")
+81.2: Expected ';' and instead saw '}'.  }
+
+Function Report
+module BaseDatabaseService, _, order, orderRef, removedOrder
+import from ./BaseDatabaseService.js
+export default
+11: (snapshot) => parameter snapshot
+17: (snapshot) => parameter snapshot
+31: (snapshot) => parameter snapshot
+32: (childSnapshot) => parameter childSnapshot
+44: (snapshot) => parameter snapshot
+57: (snapshot) => parameter snapshot
+70: (snapshot) => parameter snapshot
+
+OrderingService.js
+3.7: Unused 'uuid'.const uuid = require('uuid/v4');
+3.14: Undeclared 'require'.const uuid = require('uuid/v4');
+5.16: Undeclared 'class'.export default class OrderingService extends BaseDatabaseService {
+5.21: Expected ';' and instead saw 'OrderingService'.export default class OrderingService extends BaseDatabaseService {
+5.22: Undeclared 'OrderingService'.export default class OrderingService extends BaseDatabaseService {
+5.37: Expected ';' and instead saw 'extends'.export default class OrderingService extends BaseDatabaseService {
+5.38: Undeclared 'extends'.export default class OrderingService extends BaseDatabaseService {
+5.45: Expected ';' and instead saw 'BaseDatabaseService'.export default class OrderingService extends BaseDatabaseService {
+5.46: Unexpected expression 'BaseDatabaseService' in statement position.export default class OrderingService extends BaseDatabaseService {
+5.65: Expected ';' and instead saw '{'.export default class OrderingService extends BaseDatabaseService {
+5.66: Naked block.export default class OrderingService extends BaseDatabaseService {
+6.3: Undeclared 'constructor'.  constructor() {
+6.16: Expected ';' and instead saw '{'.  constructor() {
+6.17: Naked block.  constructor() {
+7.5: Undeclared 'super'.    super('/orders/');
+8.5: Expected 'this' at column 9, not column 5.    this.delivererService = new DelivererService();
+9.3: Expected '}' at column 5, not column 3.  }
+11.3: Undeclared 'finishOrder'.  finishOrder(delivererUid) {
+11.15: Undeclared 'delivererUid'.  finishOrder(delivererUid) {
+11.28: Expected ';' and instead saw '{'.  finishOrder(delivererUid) {
+11.29: Naked block.  finishOrder(delivererUid) {
+12.5: Expected 'var' at column 9, not column 5.    var finishedOrder = this.delivererService.removeOrderFromDeliverer(delivererUid)
+12.72: Undeclared 'delivererUid'.    var finishedOrder = this.delivererService.removeOrderFromDeliverer(delivererUid)
+12.85: Expected ';' and instead saw 'this'.    var finishedOrder = this.delivererService.removeOrderFromDeliverer(delivererUid)
+13.5: Expected 'this' at column 17, not column 5.    this.ref.push(finishedOrder);
+14.3: Expected '}' at column 5, not column 3.  }
+
+Function Report
+There are no functions.
+module BaseDatabaseService, DelivererService, finishedOrder, uuid
+import from ./BaseDatabaseService.js, ./DelivererService.js
+export default
+
+HomeScreen.js
+21.99: Expected '/'.    headerRight: <Button title='Delivery Mode' onPress={() => navigation.dispatch(resetAction)} />
+
+
+
+
+
