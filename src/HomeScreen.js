@@ -4,8 +4,9 @@ import * as firebase from 'firebase';
 import { NavigationActions } from 'react-navigation'
 
 import AuthService from './service/AuthService.js';
-import OrderingService from './service/OrderingService.js';
-
+import OrderService from './service/OrderService.js';
+import OrdererService from './service/OrdererService.js';
+import DelivererService from './service/DelivererService.js';
 const _ = require('lodash');
 
 const resetAction = NavigationActions.reset({
@@ -15,45 +16,91 @@ const resetAction = NavigationActions.reset({
   ]
 })
 
+const defaultCart = {
+  1: {
+    key: 1,
+    title: 'Cups',
+    imageUrl: require('./img/cupstxt1.png'),
+    defaultQuantity: 10,
+    pricePerDefaultQuantity: 2.99,
+    quantityOrdered: 0,
+  },
+  2: {
+    key: 2,
+    title: 'Balls',
+    imageUrl: require('./img/ballstxt1.png'),
+    defaultQuantity: 2,
+    pricePerDefaultQuantity: 2.99,
+    quantityOrdered: 0,
+  },
+}
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+class LogoutButton extends React.Component {
+  constructor() {
+    super();
+    this.authService = new AuthService();
+  }
+
+  render() {
+    return (
+      <Button
+        title="Logout"
+        onPress={() => this.authService.signOut()}
+      />
+    )
+  }
+}
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: "Home",
+    headerLeft: <LogoutButton/>,
     headerRight: <Button title='Delivery Mode' onPress={() => navigation.dispatch(resetAction)} />
   });
 
   constructor() {
     super();
     this.authService = new AuthService();
-    this.orderingService = new OrderingService();
+    this.orderService = new OrderService();
+    this.ordererService = new OrdererService();
+    this.delivererService = new DelivererService();
     this.state = {
-      cart: {
-        1: 0,
-        2: 0,
-      },
-      items: [
-        {
-          key: 1,
-          title: 'Cups',
-          imageUrl: require('./img/cupstxt1.png'),
-          defaultQuantity: 10,
-          pricePerDefaultQuantity: 2.99,
-        },
-        {
-          key: 2,
-          title: 'Balls',
-          imageUrl: require('./img/ballstxt1.png'),
-          defaultQuantity: 2,
-          pricePerDefaultQuantity: 2.99,
-        },
-      ]
+      cart: defaultCart,
+      isOrderInProgress: false,
     }
   }
 
-  checkoutCart() {
-    var mergedCart = _.forEach(this.state.items, (item)=> {
-      item.quantityOrdered = this.state.cart[item.key]
+  componentWillMount() {
+    var uid = this.props.screenProps.user.providerData[0].uid;
+    if(!_.isNull(uid)) {
+      this.setState(_.merge({}, this.state, {
+        ordererUid: uid
+      }))
+    }
+    this.ordererService.ref.child(uid + '/order').on('value', (data) => {
+      if (!_.isNull(data.val())) {
+        this.setState(_.merge({}, this.state, {
+          cart: data.cart,
+          isOrderInProgress: true,
+        }))
+      } else {
+        this.setState(_.merge({}, this.state, {
+          cart: defaultCart,
+          isOrderInProgress: false,
+        }))
+      }
     })
-    this.props.navigation.navigate('Confirm', {'user': this.props.screenProps.user, 'cart': mergedCart})
+  }
+
+  componentWillUnmount() {
+    var uid = this.props.screenProps.user.providerData[0].uid;
+    this.ordererService.ref.child(uid + '/order').off();
+  }
+
+  checkoutCart() {
+    this.props.navigation.navigate('Confirm', {'user': this.props.screenProps.user, 'cart': this.state.cart})
   }
 
   delivery() {
@@ -61,53 +108,85 @@ export default class HomeScreen extends React.Component {
   }
 
   clearCart() {
-    this.setState(_.merge({}, this.state, {
-      cart: _.mapValues(this.state.cart, () => 0)
-    }))
+    this.setState(_.merge({}, this.state, _.map(_.values(this.state.cart), (cartItem) => {
+      cartItem.quantityOrdered = 0;
+      return cartItem;
+    })))
   }
 
   onPress(item) {
-    var count = this.state.cart[item.key];
+    var count = item.quantityOrdered;
     this.setState(_.merge({}, this.state, {
       cart: {
-        [item.key]: count+1,
+        [item.key]: {
+          quantityOrdered: count + 1
+        },
       }
     }))
   }
 
   render() {
-    // const {items} = this.state.items;
+    return this.state.isOrderInProgress ? this.renderInProgress() : this.renderHome();
+  }
+
+  renderInProgress() {
     return (
       <View style={styles.container}>
+        <View style={styles.itemButtonContainer}>
+          <Text>Order is in progress</Text>
+          <Button
+            style={styles.checkoutButton}
+            onPress={() => {this.ordererService.removeOrderFromOrderer(this.props.screenProps.user.providerData[0].uid)}}
+            title="Finish order"
+            color="#841584"
+          />
+        </View>
+      </View>
+    )
+  }
 
+
+  async queryDeliverer(delivererUids) {
+    var cart = this.state.cart
+    var ordererUid = this.props.screenProps.user.providerData[0].uid
+    cart.ordererId = ordererUid
+
+    for(i=0; i<delivererUids.length; i++) {
+      console.log(uid)
+      var uid = delivererUids[i];
+      var order = this.delivererService.getOrderFromDeliverer(uid)
+      if (!order) {
+        this.delivererService.addOrderToDeliverer(cart, uid)
+        await sleep(10000);
+        var order = this.delivererService.getOrderFromDeliverer(uid)
+        if (!_.isNull(order) && !_.isUndefined(order.delivererId)) {
+          console.log("Accepted!")
+          this.ordererService.addOrderToOrderer(cart, ordererUid)
+          break;
+        } else {
+          console.log("Not accepted!")
+          this.delivererService.removeOrderFromDeliverer(uid)
+        }
+      }
+    }
+  }
+
+  renderHome() {
+    return (
+      <View style={styles.container}>
         <Button
           style={styles.checkoutButton}
-          onPress={() => {this.authService.signOut()}}
-          title="Log out"
-          color="#841584"
-        />
-        <Button
-          style={styles.checkoutButton}
-          onPress={() => {
-            var mergedCart = _.forEach(this.state.items, (item)=> {
-              item.quantityOrdered = this.state.cart[item.key]
-            })
-            var order = {
-              cart: mergedCart,
-              delivererId: null,
-              ordererId: this.props.screenProps.user.providerData[0].uid
-            }
-
-            console.log(order)
-            this.orderingService.placeOrder(order)
-          }}
-          title="Add Cart"
+          onPress={() => {this.queryDeliverer([
+            "10210669950444906",
+            "10213386516072823",
+          ])}}
+          title="Query Deliverers"
           color="#841584"
         />
         <FlatList
           contentContainerStyle={styles.feed}
           horizontal = {true}
-          data = {this.state.items}
+          data = {_.values(this.state.cart)}
           renderItem={({item}) => {
             return (
               <View style={styles.itemButtonContainer}>
@@ -124,11 +203,11 @@ export default class HomeScreen extends React.Component {
         <View style={styles.checkoutWrapper}>
           <View>
             <FlatList
-              data = {this.state.items}
+              data = {_.values(this.state.cart)}
               renderItem={({item}) => {
                 return (
                   <Text>
-                    {item.title}: {this.state.cart[item.key] * item.defaultQuantity}
+                    {item.title}: {item.quantityOrdered * item.defaultQuantity}
                   </Text>
                 )
               }}
@@ -144,7 +223,7 @@ export default class HomeScreen extends React.Component {
           />
           <Button
             style={styles.checkoutButton}
-            disabled={_.sum(_.values(this.state.cart)) === 0}
+            disabled={_.sum(_.map(_.values(this.state.cart), 'quantityOrdered')) === 0}
             onPress={() => {this.checkoutCart()}}
             title="Checkout"
             color="#841584"
