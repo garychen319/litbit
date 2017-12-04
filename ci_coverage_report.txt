@@ -11,6 +11,14 @@ Functions    : 100% ( 12/12 )
 Lines        : 88% ( 44/50 )
 ================================================================================
 
+Coverage Analysis:
+Function (100%): Every function (or subroutine) in the program has been called.
+Branches (100%): Every branch of each control structure (such as in if and case statements) been executed.
+Statements (84.62%): Most statements are executed at least once in the source code. 
+Lines (88%): Coverage of lines in code that is taken to execute branches.
+
+Why do you care? Consider the example
+
 CONTINUOUS INTEGRATION LOG:
 Worker information
 hostname: wjb-1.macstadium-us-se-1.travisci.net:40775054-1b8c-47ed-959e-a852733220e1
