@@ -17,7 +17,6 @@ Branches (100%): Every branch of each control structure (such as in if and case 
 Statements (84.62%): Most statements are executed at least once in the source code. 
 Lines (88%): Coverage of lines in code that is taken to execute branches.
 
-Why do you care? Consider the example
 
 CONTINUOUS INTEGRATION LOG:
 Worker information
