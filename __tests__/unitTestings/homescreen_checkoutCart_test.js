@@ -7,6 +7,9 @@ global.React = React;
 global.renderer = renderer;
 global.shallow = shallow;
 
+
+
+
 const _ = require('lodash');
 
 // props
@@ -62,7 +65,7 @@ describe('activate checoutCart button', () => {
       pricePerDefaultQuantity: 2.99,
     };
 
-  it('should make disabled false', () => {  
+  it('should make disabled false', () => {
     onPress(inputItem, globalState);
 
     var inCart = globalState.cart,
@@ -174,7 +177,7 @@ describe('activate checoutCart button', () => {
 //           pricePerDefaultQuantity: 2.99,
 //         },
 //       ]
-// 	const HomeScreen = shallow(<HomeScreen data={datas} />); 
+// 	const HomeScreen = shallow(<HomeScreen data={datas} />);
 // 	    expect(HomeScreen.find('.icon-star')).to.have.length(1);
 
 //    // expect(tree).toMatchSnapshot();

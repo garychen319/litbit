@@ -1,11 +1,38 @@
-import React from 'react';
-import 'react-native';
+// import React from 'react';
+// import 'react-native';
 var chai = require('chai');
 var sinon = require('sinon');
 var Firebase = require('firebase-mock').MockFirebase;
+
+var acceptOrder = true;
+var orderCart = {
+  "cart" : [ {
+    "defaultQuantity" : 10,
+    "imageUrl" : 1,
+    "key" : 1,
+    "pricePerDefaultQuantity" : 2.99,
+    "quantityOrdered" : 5,
+    "title" : "Cups"
+  }, {
+    "defaultQuantity" : 2,
+    "imageUrl" : 2,
+    "key" : 2,
+    "pricePerDefaultQuantity" : 2.99,
+    "quantityOrdered" : 4,
+    "title" : "Balls"
+  } ],
+  "ordererId" : "00000000000000002"
+}
+
 const FirebaseData = require('./litbit_fire.json')
 
 const acceptAnOrder = (orderStat) => {
+  if(!orderStat){
+    FirebaseData.development.deliverers.available[10214312867285232].order = true
+  }
+};
+
+const checkAcceptAnOrder = (orderStat) => {
   if(!orderStat){
     FirebaseData.development.deliverers.available[10214312867285232].order = true
   }
@@ -18,6 +45,8 @@ const placeAnOrder = (order) => {
 const getOrder = (order) => {
   return FirebaseData.development.deliverers.available[10214312867285232].order != order
 };
+// var orderstatus = FirebaseData.development.deliverers.available[10214312867285232].order
+// acceptAnOrder(orderstatus);
 
 describe('deliverer service', function () {
   it('accept an order', () => {
