@@ -84,7 +84,7 @@ export default class DelivererService extends BaseDatabaseService {
 
   acceptOrder(uid) {
     var orderRef = this.ref.child('available/' + uid + '/order');
-    console.log(orderRef)
+
     return orderRef.once('value', (snapshot) => {
       if (snapshot.exists()) {
         if (!_.isUndefined(snapshot.val.delivererId)) {

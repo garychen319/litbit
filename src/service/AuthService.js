@@ -12,6 +12,19 @@ export default class AuthService extends BaseDatabaseService {
     this.addUserToDatabase = this.addUserToDatabase.bind(this);
   }
 
+  getUser(uid) {
+    var user;
+    this.ref.child(uid).once('value', (snapshot) => {
+      if(snapshot.exists()) {
+        user = snapshot.val();
+      } else {
+        user = null;
+      }
+    })
+
+    return user;
+  }
+
   addUserToDatabase(user) {
     this.ref.child(user.uid).once('value', (snapshot) => {
         if (snapshot.exists()) {
