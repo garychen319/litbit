@@ -65,10 +65,10 @@ export default class DeliveryScreen extends React.Component {
   renderConfirmation() {
     return (
       <View style={styles.container}>
-          <Text>
-            [orderer name] ordered [order detail] at [order address]
-          </Text>
-          <Button title="Remove Order" onPress={() => this.delivererService.removeOrderFromDeliverer(this.state.delivererUid)}/>
+          <Text>Gary</Text>
+          <Text>East Campus</Text>
+          <Text>Room H905</Text>
+          <Button title="Reject" onPress={() => this.delivererService.removeOrderFromDeliverer(this.state.delivererUid)}/>
           <Button
             onPress={() => {this.acceptOrder()}}
             title="Accept"
@@ -98,10 +98,13 @@ export default class DeliveryScreen extends React.Component {
   renderDelivery() {
     return (
       <View style={styles.container}>
-        <Button title="Finish Order" onPress={() => this.orderService.finishOrder(this.state.delivererUid)}/>
         <Text>
           Delivery in progress
         </Text>
+        <Text>Gary</Text>
+        <Text>East Campus</Text>
+        <Text>Room H905</Text>
+        <Button title="Finish Order" onPress={() => this.orderService.finishOrder(this.state.delivererUid)}/>
       </View>
     )
   }

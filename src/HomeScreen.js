@@ -130,14 +130,12 @@ export default class HomeScreen extends React.Component {
   renderInProgress() {
     return (
       <View style={styles.container}>
-        <View style={styles.itemButtonContainer}>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Text>Order is in progress</Text>
-          <Button
-            style={styles.checkoutButton}
-            onPress={() => {this.ordererService.removeOrderFromOrderer(this.props.screenProps.user.providerData[0].uid)}}
-            title="Finish order"
-            color="#841584"
-          />
+          <Text>David</Text>
+          <Text>East Campus</Text>
+          <Text>Room 1020</Text>
+          <Text>Venmo Handle: @davidjhlee</Text>
         </View>
       </View>
     )
