@@ -112,6 +112,10 @@ export default class HomeScreen extends React.Component {
     })))
   }
 
+  enterDeliveryInfo() {
+    this.props.navigation.navigate('EnterInfo')
+  }
+
   onPress(item) {
     var count = item.quantityOrdered;
     this.setState(_.merge({}, this.state, {
@@ -161,6 +165,13 @@ export default class HomeScreen extends React.Component {
             )
           }}
         />
+        <Button
+            style={styles.checkoutButton}
+            onPress={() => this.enterDeliveryInfo()}
+            title="Enter Delivery Info"
+            color="#841584"
+            accessibilityLabel="Enter Delivery Info"
+          />
         <View style={styles.checkoutWrapper}>
           <View>
             <FlatList
@@ -190,6 +201,7 @@ export default class HomeScreen extends React.Component {
             color="#841584"
             accessibilityLabel="Checkout"
           />
+           
         </View>
       </View>
 	  )

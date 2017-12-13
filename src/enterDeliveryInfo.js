@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, TouchableHighlight, Picker, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
+import { Image, TouchableHighlight, Picker, AppRegistry, TextInput, Button, StyleSheet, Text, View, FlatList } from 'react-native';
 import AuthService from './service/AuthService.js';
 import OrderService from './service/OrderService.js';
 import DelivererService from './service/DelivererService.js';
@@ -15,29 +15,13 @@ const resetAction = NavigationActions.reset({
   ]
 })
 
-class AvailabilityButton extends React.Component {
-  constructor() {
-    super();
-    this.delivererService = new DelivererService();
-  }
-
-  render() {
-    return (
-      <Button
-        title="I'm Available"
-        onPress={() => this.delivererService.toggleAvailableDeliverer(this.props.uid)}
-      />
-    )
-  }
-}
-
 
 export default class DeliveryScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
-    title: "Delivery Mode",
-    headerRight: <Button title='Order Mode' onPress={() => navigation.dispatch(resetAction)}/>,
-    // headerRight: <LogoutButton/>,
-    headerLeft: <AvailabilityButton uid={screenProps.user.providerData[0].uid}/>
+    title: "Enter Delivery Info",
+    //headerRight: <Button title='Done' onPress={() => navigation.dispatch(resetAction)}/>,
+    //Change headerRight onPress function to do something with data
+    //headerLeft is <-Home
   });
 
   constructor() {
@@ -49,62 +33,61 @@ export default class DeliveryScreen extends React.Component {
       pendingDelivery: null,
       delivererUid: null,
     }
+
+    this.state = {
+    dorm: '',
+    roomno:'',
+    phone:''};
   }
 
-
-  acceptOrder(){
-    this.delivererService.acceptOrder(this.state.delivererUid).then((response) => {
-      this.setState(_.merge({}, this.state, {
-        pendingDelivery: {
-          delivererId: this.state.delivererId
-        }
-      }))
-    });
-  }
-
-  renderConfirmation() {
-    return (
-      <View style={styles.container}>
-          <Text style={styles.myinfo}>Name: Gary</Text>
-          <Text style={styles.myinfo}>Dorm: East Campus</Text>
-          <Text style={styles.myinfo}>Room #: H905</Text>
-          <Button title="Reject" onPress={() => this.delivererService.removeOrderFromDeliverer(this.state.delivererUid)}/>
-          <Button
-            onPress={() => {this.acceptOrder()}}
-            title="Accept"
-            color="#841584"
-            accessibilityLabel="Accept"
-          />
-      </View>
-    )
-  }
 
   renderDefault() {
     return (
       <View style={styles.container}>
-        {
-          /*
-          <Button title="Trigger Order" onPress={() => this.triggerOrder()}/>
-          <Button title="Remove Order" onPress={() => this.delivererService.removeOrderFromDeliverer(this.state.delivererUid)}/>
-          */
-        }
-        <Text>
-          No orders yet!
+
+        <Text style={styles.titletext}>
+          Please Enter Your Delivery Info:
         </Text>
+        <Text></Text>
+
+        <TextInput
+          style={{height: 40}}
+          placeholder="Dorm"
+          onChangeText={(dorm) => this.setState({dorm})}
+        />
+        <TextInput
+          style={{height: 40}}
+          placeholder="Room Number"
+          onChangeText={(roomno) => this.setState({roomno})}
+        />
+        <TextInput
+          style={{height: 40}}
+          placeholder="Phone Number"
+          onChangeText={(phone) => this.setState({phone})}
+        /> 
+
+      {/*Change this button, info is stored in this.state, pressing button prints to console*/}
+        <Button title="Submit" 
+        onPress={() => console.log("Dorm:", this.state.dorm,
+        "Room #:", this.state.roomno, "Phone #:", this.state.phone)}/>
+
       </View>
+
     )
   }
+
+
+
+
+
+
+
+
 
   renderDelivery() {
     return (
       <View style={styles.container}>
-        <Text style={styles.myinfo}>
-          Delivery in progress
-        </Text>
-        <Text style={styles.myinfo} >Name: Gary</Text>
-        <Text style={styles.myinfo} >Dorm: East Campus</Text>
-        <Text style={styles.myinfo} >Room #: H905</Text>
-        <Button title="Finish Order" onPress={() => this.orderService.finishOrder(this.state.delivererUid)}/>
+
       </View>
     )
   }
@@ -173,9 +156,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: 'left'
   },
-  myinfo: {
-    fontSize: 25,
-    textAlign: 'left'
+  titletext: {
+    fontSize: 18,
   },
   checkoutButton: {
   },

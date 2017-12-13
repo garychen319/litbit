@@ -16,7 +16,7 @@ export default class AcceptOrderScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>
+        <Text style={styles.myinfo}>
           Order Accepted!!
         </Text>
         <View style={styles.checkoutWrapper}>
@@ -33,7 +33,7 @@ export default class AcceptOrderScreen extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
+    padding: 25,
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
   },
   itemButton: {
     width: 200,
+  },
+  myinfo: {
+    fontSize: 25,
+    textAlign: 'left'
   },
   checkoutButton: {
   },

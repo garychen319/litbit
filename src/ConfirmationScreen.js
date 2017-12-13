@@ -164,6 +164,10 @@ const styles = StyleSheet.create({
   },
   checkoutButton: {
   },
+  myinfo: {
+    fontSize: 25,
+    textAlign: 'left'
+  },
   checkoutWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
